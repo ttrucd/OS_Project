@@ -13,6 +13,7 @@ function App() {
   const [results, setResults] = useState([]);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("fifo");
 
+// creates processes with burst times
   const generateProcesses = (numProcesses) => {
     const newProcesses = [];
     for (let i =0; i< numProcesses; i++){
@@ -24,6 +25,8 @@ function App() {
   
   setProcesses(newPRocesses);
 };
+
+//execute the selected scheduling algorithm and store the results
   const runAlgorithm = () => {
     let algorithmResult = [];
     switch (selectedAlgorithm) {
@@ -44,6 +47,8 @@ function App() {
     }
     setResults(algorithmResult);
   };
+
+//use jsPDF to create and download a PDF of the results
   const exportToPDF = () => {
     const doc = new jsPDF();
     doc.text("Scheduling Results", 20, 20);
