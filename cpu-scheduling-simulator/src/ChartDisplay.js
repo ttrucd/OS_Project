@@ -2,7 +2,7 @@ import React from 'react';
 import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
 
-ChartJS.register(CatergoryScale, LinearScale, BarElement, WebTransportBidirectionalStream, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 function ChartDisplay ({results}) {
     const data ={

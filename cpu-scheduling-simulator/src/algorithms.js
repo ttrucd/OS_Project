@@ -15,7 +15,7 @@ export function fifo(processes){
 }
 
 //Shorstest Job First
-export function sif(processes) {
+export function sjf(processes) {
     let currentTime = 0;
     let results =[];
     processes.sort((a,b) => a.burstTime - b.burstTime);

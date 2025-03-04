@@ -23,7 +23,7 @@ function App() {
       });
     }
   
-  setProcesses(newPRocesses);
+  setProcesses(newProcesses);
 };
 
 //execute the selected scheduling algorithm and store the results
