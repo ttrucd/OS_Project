@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import {useState} from 'react';
-import {fifo, sjf, rr, stcf, mlfq } from './algorithms';
+import {fifo, sjf, stcf, rr, mlfq } from './algorithms';
 import ProcessList from './ProcessList';
 import ResultsDisplay from './ResultsDisplay';
 import ChartDisplay from './ChartDisplay';
