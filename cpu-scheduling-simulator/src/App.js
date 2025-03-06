@@ -4,6 +4,7 @@ import Process from './Process';
 import ResultsDisplay from './ResultsDisplay';
 import ChartDisplay from './ChartDisplay';
 import { jsPDF} from 'jspdf';
+import {generateProcesses} from './generate';
 import './App.css';
 
 function App() {
@@ -12,18 +13,7 @@ function App() {
   const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("fifo"); //hold the current selected scheduling algorithm (default to fifo)
 
-// creates processes with random burst times (1-10)
-  const generateProcesses = (numProcesses) => {
-    const newProcesses = [];
-    for (let i =0; i< numProcesses; i++){
-      newProcesses.push ({
-        id: i + 1,
-        burstTime: Math.floor(Math.random() * 10) + 1,
-      });
-    }
-  
-  setProcesses(newProcesses);
-};
+
 
 //execute the selected scheduling algorithm and store the results
 //it uses a switch statement to choose whcih algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
