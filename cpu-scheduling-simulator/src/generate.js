@@ -1,5 +1,5 @@
 // creates processes with random burst times (1-10)
-export const generateProcesses = (numProcesses) => {
+export function generateProcesses (numProcesses) {
     const newProcesses = [];    //emptry array
 
     //a for loop runs for numProcesses times

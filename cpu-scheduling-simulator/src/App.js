@@ -76,9 +76,19 @@ const handleGenerateProcesses = (numProcesses) => {
 
       <button onClick ={runAlgorithm}> Run Algorithm</button>
 
+      <div className ="tables-container">
+        <div className ="generated-table">
+          <ProcessDisplay processes={process}/>
+        </div>
+        <div className ="result-table">
+          <ResultsDisplay results={results}/>
+        </div>
+      </div>
+      {/*
       <ProcessDisplay processes={processes} />
       <ResultsDisplay results ={results} />
-      <ChartDisplay results ={ results}/>
+      <ChartDisplay results ={ results}/> 
+      */}
       <button onClick ={exportToPDF}>Download PDF</button>
     </div>
   );
