@@ -8,6 +8,7 @@ import { jsPDF} from 'jspdf';
 import {generateProcesses} from './generate';
 import Animation from './animation';
 import './App.css';
+import cattGif from './catt.gif';
 
 function App() {
   const [processes, setProcesses] = useState([]);     //an array store the processes to be scheduled, where each process is an object with a burstTime
@@ -63,7 +64,10 @@ const handleGenerateProcesses = (numProcesses) => {
 
   return (
     <div className="container">
-      <h1>CPU Scheduling Simulator</h1>
+      <h1 className="title">
+        <img src={cattGif} alt="Cat" className="title-gif"/>
+      
+      CPU Scheduling Simulator</h1>
       <Process generateProcesses ={handleGenerateProcesses}/>
       
       

@@ -9,12 +9,32 @@
   flex-direction: column;
   text-align: center;
 }
+.title {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+.title-gif {
+  width: 20%;
+  height: auto;
+}
 button{
   margin: 10px 0;
+  padding: 5px;
+
 }
+
+input[type="number"], select {
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
 /*container holld both tables*/
 .tables-container {
   display: flex;
+  width: 60%;
   justify-content: space-between;
   margin-top: 20px;
 }
@@ -41,7 +61,9 @@ table{
 }
 
 table, th, td{
-  border: 1px solid black;
+  padding: 8px;
+  border: 1px solid rgb(151, 41, 60);
+  text-align: left;
 }
 
 th, td{
