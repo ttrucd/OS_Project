@@ -89,6 +89,13 @@ const handleGenerateProcesses = (numProcesses) => {
       <ResultsDisplay results ={results} />
       <ChartDisplay results ={ results}/> 
       */}
+
+      {results.length >0 && (
+        <div className="chart-container">
+          <h3>Completion Time Chart</h3>
+          <ChartDisplay results ={results}/>
+          </div>
+      )}
       <button onClick ={exportToPDF}>Download PDF</button>
     </div>
   );
