@@ -1,11 +1,11 @@
 //generate processes
 import React from 'react';
 
-function ProcessList({generateProcesses}) {
+function Process({generateProcesses}) {
     return  (
         <div>
             <button onclick ={() => generateProcesses(5)}>Generate 5 Processes</button>
         </div>
     )
 }
-export default ProcessList;
+export default Process;

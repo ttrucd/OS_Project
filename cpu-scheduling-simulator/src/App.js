@@ -1,19 +1,18 @@
-import logo from './logo.svg';
 import {useState} from 'react';
 import {fifo, sjf, stcf, rr, mlfq } from './algorithms';
-import ProcessList from './ProcessList';
+import Process from './Process';
 import ResultsDisplay from './ResultsDisplay';
 import ChartDisplay from './ChartDisplay';
 import { jsPDF} from 'jspdf';
 import './App.css';
 
 function App() {
-  const [processes, setProcesses] = useState([]);
-  const [timeQuantum, setTimeQuantum] = useState(5);
-  const [results, setResults] = useState([]);
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState("fifo");
+  const [processes, setProcesses] = useState([]);     //an array store the processes to be scheduled, where each process is an object with a burstTime
+  const [timeQuantum, setTimeQuantum] = useState(5); //a number stores the time quantum for the RR algorithm
+  const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState("fifo"); //hold the current selected scheduling algorithm (default to fifo)
 
-// creates processes with burst times
+// creates processes with random burst times (1-10)
   const generateProcesses = (numProcesses) => {
     const newProcesses = [];
     for (let i =0; i< numProcesses; i++){
@@ -27,6 +26,7 @@ function App() {
 };
 
 //execute the selected scheduling algorithm and store the results
+//it uses a switch statement to choose whcih algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
   const runAlgorithm = () => {
     let algorithmResult = [];
     switch (selectedAlgorithm) {
@@ -41,6 +41,9 @@ function App() {
         break;
       case 'rr':
         algorithmResult = rr(processes, timeQuantum);
+        break;
+      case 'mlfq':
+        algorithmResult =mlfq(processes);
         break;
       default:
         break;
@@ -69,7 +72,7 @@ function App() {
         <option value="fifo">FIFO</option>
         <option value="sjf">SJF</option>
         <option value="stcf">STCF</option>
-        <option value="rr">Round Robin</option>
+        <option value="rr">RR</option>
         <option value="mlfq">MLFQ</option>
       </select>
 
@@ -80,25 +83,6 @@ function App() {
     </div>
   );
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
 }
 
 export default App;
