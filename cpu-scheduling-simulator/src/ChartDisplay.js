@@ -1,6 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
+import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend} from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -11,8 +11,8 @@ function ChartDisplay ({results}) {
             {
                 label: 'Completion Time',
                 data: results.map (result => result.endTime),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(172, 99, 138, 0.2)',
+                borderColor: 'rgb(186, 135, 171)',
                 borderWidth: 1,
             },
         ],

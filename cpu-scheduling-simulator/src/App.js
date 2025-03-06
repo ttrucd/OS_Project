@@ -78,7 +78,7 @@ const handleGenerateProcesses = (numProcesses) => {
 
       <div className ="tables-container">
         <div className ="generated-table">
-          <ProcessDisplay processes={process}/>
+          <ProcessDisplay processes={processes}/>
         </div>
         <div className ="result-table">
           <ResultsDisplay results={results}/>
@@ -90,6 +90,7 @@ const handleGenerateProcesses = (numProcesses) => {
       <ChartDisplay results ={ results}/> 
       */}
 
+    {/*the chart willl display after run the algorithm, as long as the results array has data */}
       {results.length >0 && (
         <div className="chart-container">
           <h3>Completion Time Chart</h3>
