@@ -7,6 +7,7 @@ export function generateProcesses (numProcesses) {
       newProcesses.push ({
         id: i + 1,
         burstTime: Math.floor(Math.random() * 10) + 1,  //burstTime: random 1 to 10 using math.floor
+        arrivalTime: Math.floor(Math.random() *10)      //randome arrival time 0 to 10
       });
     }
   //once all the processes are created, the setProcesses func is called to update processes state.

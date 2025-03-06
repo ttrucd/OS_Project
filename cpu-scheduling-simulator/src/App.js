@@ -66,6 +66,7 @@ const handleGenerateProcesses = (numProcesses) => {
       <h1>CPU Scheduling Simulator</h1>
       <Process generateProcesses ={handleGenerateProcesses}/>
       
+      
       <input type="number" value={timeQuantum} onChange={(e)=> setTimeQuantum(e.target.value)} placeholder ="Time Quantum (For RR)"/>
 
       <select onChange={(e) => setSelectedAlgorithm(e.target.value)} value ={selectedAlgorithm}>

@@ -5,18 +5,28 @@ function ProcessDisplay ({processes}){
     return (
         <div>
             <h2>Generated Processes:</h2>
-            {processes.length > 0 ? (
-                <ul>
-                    {processes.map ((process) => (
-                        <li key ={process.id}>
-                            Process {process.id}: Burst Time = {process.burstTime}
-
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No processes generated yet.</p>
-            )}
+            <table className="process-table">
+                <thead>
+                    <tr>
+                        <th>Process ID</th>
+                        <th>Burst Time</th>
+                        <th>Arrival Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {processes.map((process, index) => {
+                        return (
+                        <tr key={index}>
+                            <td>{process.id}</td>
+                            <td>{process.burstTime}</td>
+                            <td>{process.arrivalTime}</td>
+                        </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+            
+           
         </div>
     );
 }
