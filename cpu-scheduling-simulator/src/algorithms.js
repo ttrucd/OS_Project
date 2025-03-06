@@ -36,19 +36,23 @@ export function sjf(processes) {
 export function stcf (processes) {
     let currentTime =0;
     let results =[];
+
+    //sort processes by burst time
     processes.sort((a,b) => a.burstTime - b.burstTime);
 
     for (let i =0; i<processes.length; i++) {
         currentTime += processes[i].burstTime;
+        //push the results with the necessary data
         results.push ({
-            processId: process[i].id,
+            processId: processes[i].id,
             startTime: currentTime - processes[i].burstTime,
             endTime: currentTime,
         });
     }
    
-    return results; //placeholder
+    return results; //return the results array
 }
+
 export function rr(processes, timeQuantum) {
     let queue = [...processes];
     let currentTime = 0;
