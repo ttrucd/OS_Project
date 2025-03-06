@@ -13,6 +13,11 @@ function App() {
   const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
   const [selectedAlgorithm, setSelectedAlgorithm] = useState("fifo"); //hold the current selected scheduling algorithm (default to fifo)
 
+//function to generate processes
+const handleGenerateProcesses = (numProcesses) => {
+  const newProcesses = generateProcesses(numProcesses); //call the import function
+  setProcesses(newProcesses);
+};
 
 
 //execute the selected scheduling algorithm and store the results
@@ -55,7 +60,8 @@ function App() {
   return (
     <div>
       <h1>CPU Scheduling Simulator</h1>
-      <button onClick ={() => generateProcesses(5)}>Generate Processes</button>
+      <Process generateProcesses ={handleGenerateProcesses}/>
+      
       <input type="number" value={timeQuantum} onChange={(e)=> setTimeQuantum(e.target.value)} placeholder ="Time Quantum (For RR)"/>
 
       <select onChange={(e) => setSelectedAlgorithm(e.target.value)} value ={selectedAlgorithm}>
@@ -67,6 +73,7 @@ function App() {
       </select>
 
       <button onClick ={runAlgorithm}> Run Algorithm</button>
+
       <ResultsDisplay results ={results} />
       <ChartDisplay results ={ results}/>
       <button onClick ={exportToPDF}>Download PDF</button>
