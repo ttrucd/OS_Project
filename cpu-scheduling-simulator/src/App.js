@@ -60,7 +60,7 @@ const handleGenerateProcesses = (numProcesses) => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>CPU Scheduling Simulator</h1>
       <Process generateProcesses ={handleGenerateProcesses}/>
       

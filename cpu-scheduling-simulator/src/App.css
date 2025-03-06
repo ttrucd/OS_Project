@@ -1,6 +1,17 @@
 .App {
   text-align: center;
 }
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  text-align: center;
+}
+button{
+  margin: 10px 0;
+}
 /*container holld both tables*/
 .tables-container {
   display: flex;
