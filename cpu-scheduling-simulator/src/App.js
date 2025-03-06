@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {fifo, sjf, stcf, rr, mlfq } from './algorithms';
 import Process from './Process';
+import ProcessDisplay from './ProcessDisplay';
 import ResultsDisplay from './ResultsDisplay';
 import ChartDisplay from './ChartDisplay';
 import { jsPDF} from 'jspdf';
@@ -57,6 +58,7 @@ const handleGenerateProcesses = (numProcesses) => {
     });
     doc.save("results.pdf");
   };
+
   return (
     <div>
       <h1>CPU Scheduling Simulator</h1>
@@ -74,6 +76,7 @@ const handleGenerateProcesses = (numProcesses) => {
 
       <button onClick ={runAlgorithm}> Run Algorithm</button>
 
+      <ProcessDisplay processes={processes} />
       <ResultsDisplay results ={results} />
       <ChartDisplay results ={ results}/>
       <button onClick ={exportToPDF}>Download PDF</button>
