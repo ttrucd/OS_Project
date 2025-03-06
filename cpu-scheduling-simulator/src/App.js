@@ -6,8 +6,7 @@ import ResultsDisplay from './ResultsDisplay';
 import ChartDisplay from './ChartDisplay';
 import { jsPDF} from 'jspdf';
 import {generateProcesses} from './generate';
-import './animation/animation.js';
-import './animation/animation.css';
+import Animation from './animation';
 import './App.css';
 
 function App() {
@@ -87,16 +86,15 @@ const handleGenerateProcesses = (numProcesses) => {
           <ResultsDisplay results={results}/>
         </div>
       </div>
-      {/*
-      <ProcessDisplay processes={processes} />
-      <ResultsDisplay results ={results} />
-      <ChartDisplay results ={ results}/> 
-      */}
+
+
+      {/* display the progress bar animation*/}
       <div className="progress">
         {processes.map((process, index) => (
-          <ProgressBar key ={index} progress = {results[index]?.endTime} label ={`Process ${process.id}`}/>
+          <Animation key ={index} progress = {results[index]?.endTime} label ={`Process ${process.id}`}/>
         ))}
       </div>
+
     {/*the chart willl display after run the algorithm, as long as the results array has data */}
       {results.length >0 && (
         <div className="chart-container">

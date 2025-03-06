@@ -1,24 +1,25 @@
 //use animation to show the progress of each algorithm
 import React, {useState, useEffect} from 'react';
-import '.animation.css';
+import './animation.css';
 
-function animation({progress, label} ) {
+function Animation({progress, label} ) {
     const [currentProgress, setCurrentProgress] =useState(0);
 
     //update the progress every time the progress value changes
     useEffect(() => {
-        const progressUpdate = setIntervall(() => {
-            if(currentProgress < progress) {
-                setCurrentProgress ((prev) => prev +1); //increase the progress
+        const progressUpdate = setInterval(() => {
+            setCurrentProgress((prev) => {
+            if(prev < progress) {
+                return prev + 1;//increase the progress
 
             }
-            else {
                 clearInterval(progressUpdate);    //stop the interval once we reach the target progress
-            }
+            return prev;
+        });
         }, 40); //update every 40ms
 
         return () => clearInterval(progressUpdate); //clean up when componenet unmounts
-    }, [progress, currentProgress]);
+    }, [progress, currentProgress]);                //dependency on both progress and currentProgress
 
     return (
         <div className="progress-container">
@@ -27,4 +28,4 @@ function animation({progress, label} ) {
         </div>
     );
 }
-export default animation;
+export default Animation;
