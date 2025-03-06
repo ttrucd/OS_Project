@@ -85,7 +85,7 @@ const handleGenerateProcesses = (numProcesses) => {
         <div className ="result-table">
           <ResultsDisplay results={results}/>
         </div>
-      </div>
+      
 
 
       {/* display the progress bar animation*/}
@@ -93,6 +93,7 @@ const handleGenerateProcesses = (numProcesses) => {
         {processes.map((process, index) => (
           <Animation key ={index} progress = {results[index]?.endTime} label ={`Process ${process.id}`}/>
         ))}
+      </div>
       </div>
 
     {/*the chart willl display after run the algorithm, as long as the results array has data */}

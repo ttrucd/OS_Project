@@ -3,7 +3,7 @@
 }
 .container{
   display:flex;
-  justify-content: center;
+  
   align-items: center;
   min-height: 100vh;
   flex-direction: column;
@@ -55,8 +55,9 @@ th{
 .chart-container {
   margin-top: 20px;
   text-align: center;
-  width: 100%;
+  width: 60%;
   display: flex;
   justify-content: center;
+  flex-direction: column; /*stacked vertically*/
 }
-/*animation*/
+
