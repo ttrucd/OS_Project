@@ -7,10 +7,15 @@ function Animation({progress, label} ) {
 
     //update the progress every time the progress value changes
     useEffect(() => {
+        //if progress has not changed, do nothing
+        if(currentProgress === progress) return; 
+
+        //set interval to simulate the progress update 
         const progressUpdate = setInterval(() => {
             setCurrentProgress((prev) => {
             if(prev < progress) {
-                return prev + 1;//increase the progress
+                //increase progress to match the target
+                return Math.min( prev + 1), progress; //ensure it doesn't exceed the target
 
             }
                 clearInterval(progressUpdate);    //stop the interval once we reach the target progress
@@ -19,7 +24,8 @@ function Animation({progress, label} ) {
         }, 40); //update every 40ms
 
         return () => clearInterval(progressUpdate); //clean up when componenet unmounts
-    }, [progress, currentProgress]);                //dependency on both progress and currentProgress
+
+    }, [progress]);                //only trigger the effect when the progress value changes
 
     return (
         <div className="progress-container">

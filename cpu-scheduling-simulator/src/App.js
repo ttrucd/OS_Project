@@ -14,7 +14,7 @@ function App() {
   const [processes, setProcesses] = useState([]);     //an array store the processes to be scheduled, where each process is an object with a burstTime
   const [timeQuantum, setTimeQuantum] = useState(5); //a number stores the time quantum for the RR algorithm
   const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState("fifo"); //hold the current selected scheduling algorithm (default to fifo)
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState([]); //selected algorithms should be an array
 
 
 //function to generate processes
@@ -27,27 +27,32 @@ const handleGenerateProcesses = (numProcesses) => {
 //execute the selected scheduling algorithm and store the results
 //it uses a switch statement to choose whcih algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
   const runAlgorithm = () => {
-    let algorithmResult = [];
-    switch (selectedAlgorithm) {
-      case 'fifo':
-        algorithmResult = fifo(processes);
+    let algorithmResult = []; //hold results for multiple algorithms
+
+    selectedAlgorithm.forEach((algorithm) => {
+      let algorithmResult = [];
+      switch (selectedAlgorithm) {
+        case 'fifo':
+          algorithmResult = fifo(processes);
         break;
-      case 'sif':
-        algorithmResult = sjf(processes);
+        case 'sif':
+          algorithmResult = sjf(processes);
         break;
-      case 'stcf':
-        algorithmResult = stcf(processes);
+        case 'stcf':
+          algorithmResult = stcf(processes);
         break;
-      case 'rr':
-        algorithmResult = rr(processes, timeQuantum);
+        case 'rr':
+          algorithmResult = rr(processes, timeQuantum);
         break;
-      case 'mlfq':
-        algorithmResult =mlfq(processes);
+        case 'mlfq':
+          algorithmResult =mlfq(processes);
         break;
-      default:
+          default:
         break;
     }
-    setResults(algorithmResult);
+    algorithmResult.push({algorithm, result: algorithmResult});
+  });
+    setResults(algorithmResult); //set the results for multiple algorithms 
   };
 
 //use jsPDF to create and download a PDF of the results
@@ -62,6 +67,14 @@ const handleGenerateProcesses = (numProcesses) => {
     doc.save("results.pdf");
   };
 
+  //handle algorithm selection
+  const handleAlgorithmSelection = (algorithm) => {
+    setSelectedAlgorithm ((prevSelected) => 
+      prevSelected.includes(algorithm)
+      ? prevSelected.filter((algo) => algo !== algorithm)
+      : [...prevSelected, algorithm]);
+  };
+
   return (
     <div className="container">
       <h1 className="title">
@@ -73,13 +86,21 @@ const handleGenerateProcesses = (numProcesses) => {
       
       <input type="number" value={timeQuantum} onChange={(e)=> setTimeQuantum(e.target.value)} placeholder ="Time Quantum (For RR)"/>
 
-      <select onChange={(e) => setSelectedAlgorithm(e.target.value)} value ={selectedAlgorithm}>
-        <option value="fifo">FIFO</option>
-        <option value="sjf">SJF</option>
-        <option value="stcf">STCF</option>
-        <option value="rr">RR</option>
-        <option value="mlfq">MLFQ</option>
-      </select>
+    {/*Multiple select box for algorithms*/}
+    <div className ="algorithm-selection">
+      <label> Select Algorithm</label>
+      <div className ="algorithm-checkboxes">
+        {['fifo', 'sjf', 'stcf', 'rr','mlfq'].map((algorithm) => (
+          <div key ={algorithm} className="algorithm-box">
+            <input type ="checkbox" id={algorithm} value ={algorithm} checked ={selectedAlgorithm.includes(algorithm)}
+            onChange ={() => handleAlgorithmSelection(algorithm)} 
+            />
+            <label htmlFor ={algorithm}>{algorithm.toUpperCase()}</label>
+            </div>
+        ))}
+        </div>
+        </div>
+   
 
       <button onClick ={runAlgorithm}> Run Algorithm</button>
 
@@ -92,14 +113,29 @@ const handleGenerateProcesses = (numProcesses) => {
         </div>
       
 
+      </div>
+       {/* Timeline Animation */}
+       <div className="timeline">
+        {results.length > 0 &&
+          results.map((algoResult, index) => (
+            <div key={index} className="timeline-algorithm">
+              <h4>{algoResult.algorithm}</h4>
+              <div className="timeline-processes">
+                {processes.map((process, idx) => {
+                  const processResult = algoResult.result.find(res => res.processId === process.id);
+                  return (
+                    <Animation
+                      key={idx}
+                      progress={processResult?.endTime}  // Use the end time for progress
+                      label={`Process ${process.id}`}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+      </div>
 
-      {/* display the progress bar animation*/}
-      <div className="progress">
-        {processes.map((process, index) => (
-          <Animation key ={index} progress = {results[index]?.endTime} label ={`Process ${process.id}`}/>
-        ))}
-      </div>
-      </div>
 
     {/*the chart willl display after run the algorithm, as long as the results array has data */}
       {results.length >0 && (

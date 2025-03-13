@@ -83,3 +83,20 @@ th{
   flex-direction: column; /*stacked vertically*/
 }
 
+/*Algorithm boxes*/
+.algorithm-selection {
+  margin-top: 20px;
+}
+.algorithm-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.algorithm-box {
+  display: flex;
+  align-items: center;
+}
+.algorithm-box input {
+  margin-right: 5px; 
+}
