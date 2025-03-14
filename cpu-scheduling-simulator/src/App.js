@@ -27,15 +27,15 @@ const handleGenerateProcesses = (numProcesses) => {
 //execute the selected scheduling algorithm and store the results
 //it uses a switch statement to choose whcih algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
   const runAlgorithm = () => {
-    let algorithmResult = []; //hold results for multiple algorithms
+    let allResults = []; //hold results for multiple algorithms
 
     selectedAlgorithm.forEach((algorithm) => {
       let algorithmResult = [];
-      switch (selectedAlgorithm) {
+      switch (algorithm) {
         case 'fifo':
           algorithmResult = fifo(processes);
         break;
-        case 'sif':
+        case 'sjf':
           algorithmResult = sjf(processes);
         break;
         case 'stcf':
@@ -45,14 +45,16 @@ const handleGenerateProcesses = (numProcesses) => {
           algorithmResult = rr(processes, timeQuantum);
         break;
         case 'mlfq':
-          algorithmResult =mlfq(processes);
+          algorithmResult = mlfq(processes);
         break;
           default:
         break;
     }
-    algorithmResult.push({algorithm, result: algorithmResult});
+  
+    
+    allResults.push({algorithm, result: algorithmResult});
   });
-    setResults(algorithmResult); //set the results for multiple algorithms 
+    setResults(allResults); //set the results for multiple algorithms 
   };
 
 //use jsPDF to create and download a PDF of the results
@@ -91,6 +93,7 @@ const handleGenerateProcesses = (numProcesses) => {
       <label> Select Algorithm</label>
       <div className ="algorithm-checkboxes">
         {['fifo', 'sjf', 'stcf', 'rr','mlfq'].map((algorithm) => (
+
           <div key ={algorithm} className="algorithm-box">
             <input type ="checkbox" id={algorithm} value ={algorithm} checked ={selectedAlgorithm.includes(algorithm)}
             onChange ={() => handleAlgorithmSelection(algorithm)} 
@@ -108,19 +111,20 @@ const handleGenerateProcesses = (numProcesses) => {
         <div className ="generated-table">
           <ProcessDisplay processes={processes}/>
         </div>
-        <div className ="result-table">
-          <ResultsDisplay results={results}/>
-        </div>
-      
 
-      </div>
-       {/* Timeline Animation */}
-       <div className="timeline">
+        {/*display results for each selected algorithm*/}
         {results.length > 0 &&
-          results.map((algoResult, index) => (
-            <div key={index} className="timeline-algorithm">
-              <h4>{algoResult.algorithm}</h4>
-              <div className="timeline-processes">
+
+          results.map((algoResult,index) => (
+
+            <div key={index} className="algorithm-box">
+              <h3>{algoResult.algorithm.toUpperCase()} Resutls</h3>
+              <div className ="result-table">
+                <ResultsDisplay results ={algoResult.result} />
+              </div>
+
+              <div className="progress">
+              <h4>{algoResult.algorithm.toUpperCase()}Progress</h4>
                 {processes.map((process, idx) => {
                   const processResult = algoResult.result.find(res => res.processId === process.id);
                   return (
@@ -132,9 +136,10 @@ const handleGenerateProcesses = (numProcesses) => {
                   );
                 })}
               </div>
-            </div>
+              </div>
           ))}
-      </div>
+          </div>
+            
 
 
     {/*the chart willl display after run the algorithm, as long as the results array has data */}
@@ -143,7 +148,9 @@ const handleGenerateProcesses = (numProcesses) => {
           <h3>Completion Time Chart</h3>
           <ChartDisplay results ={results}/>
           </div>
+        
       )}
+      
       <button onClick ={exportToPDF}>Download PDF</button>
     </div>
   );

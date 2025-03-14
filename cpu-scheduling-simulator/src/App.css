@@ -95,8 +95,5 @@ th{
 
 .algorithm-box {
   display: flex;
-  align-items: center;
-}
-.algorithm-box input {
-  margin-right: 5px; 
+  align-items: 10px;
 }
