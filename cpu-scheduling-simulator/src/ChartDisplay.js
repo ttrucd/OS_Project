@@ -9,7 +9,14 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 //Tooltip shows a small pop-up when hovering over a bar on the chart
 //legend use to display label for the chart
 
-function ChartDisplay ({results}) { //takes in results as a prop
+function ChartDisplay ({results, algorithm}) { //takes in results as a prop
+    if (!results || results.length === 0) {
+        return <p> No results avaible for the chart.</p>; //handle missing or empty results
+
+    }
+    if (!algorithm) {
+        return <p>Algorithm is not specified.</p> //handle missing algorithm
+    }
     const data ={
         labels: results.map(result => `Process ${result.processId}`),
         datasets: [
@@ -22,6 +29,13 @@ function ChartDisplay ({results}) { //takes in results as a prop
             },
         ],
     };
-    return <Bar data={data} />; //render the bar chart.
+    return(
+        <div className ="chart-container">
+            <h3>{algorithm.toUpperCase()} - Completion Time Chart</h3>
+            <Bar data={data} /> {/*render the bar chart.*/}
+        </div>
+    );
+
+     //render the bar chart.
 }
 export default ChartDisplay;  //export the ChartDisplay component

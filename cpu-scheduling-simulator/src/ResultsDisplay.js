@@ -3,7 +3,6 @@ import React from 'react';
 function ResultsDisplay({results}){
     return  (
         <div> 
-            <h2>Results:</h2>
             {results.length >0 ? (
                 <table> 
                     <thead>

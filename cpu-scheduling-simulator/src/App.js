@@ -113,18 +113,20 @@ const handleGenerateProcesses = (numProcesses) => {
         </div>
 
         {/*display results for each selected algorithm*/}
-        {results.length > 0 &&
+        {results.length > 0 && results.map((algoResult,index) => (
 
-          results.map((algoResult,index) => (
-
-            <div key={index} className="algorithm-box">
+              <div key={index} className ="result-table">
               <h3>{algoResult.algorithm.toUpperCase()} Resutls</h3>
-              <div className ="result-table">
+            
                 <ResultsDisplay results ={algoResult.result} />
               </div>
-
+        ))}
+        </div>
+          {/*display progress bar animation for each algorithm */}
               <div className="progress">
-              <h4>{algoResult.algorithm.toUpperCase()}Progress</h4>
+                {results.map((algoResult, index) => (
+                  <div key={index} className="progress-algorithm">
+              <h4>{algoResult.algorithm.toUpperCase()}</h4>
                 {processes.map((process, idx) => {
                   const processResult = algoResult.result.find(res => res.processId === process.id);
                   return (
@@ -136,20 +138,23 @@ const handleGenerateProcesses = (numProcesses) => {
                   );
                 })}
               </div>
-              </div>
           ))}
           </div>
             
 
 
     {/*the chart willl display after run the algorithm, as long as the results array has data */}
-      {results.length >0 && (
-        <div className="chart-container">
+      {results.length >0 && results.map ((algoResult, index) => (
+
+        <div key ={index} className="chart-container">
           <h3>Completion Time Chart</h3>
-          <ChartDisplay results ={results}/>
+          <ChartDisplay 
+    
+          results ={algoResult.result}
+          algorithm ={algoResult.algorithm} />
           </div>
         
-      )}
+      ))}
       
       <button onClick ={exportToPDF}>Download PDF</button>
     </div>
