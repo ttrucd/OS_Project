@@ -10,16 +10,22 @@ function ResultsDisplay({results, algoResult}){
                         <tr> 
 {/*after running the algorithm, the result table with ProcessId, Start Time and End Time*/}
                             <th>Process ID</th> 
+                            <th>Arrival Time</th>
+                            <th>Burst Time</th>
                             <th>Start Time</th>
                             <th>End Time</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         {results.map((result) => (
                         <tr key ={result.processId} >
                             <td>{result.processId}</td>
+                            <td>{result.arrivalTime}</td>
+                            <td>{result.burstTime}</td>
                             <td>{result.startTime}</td>
                             <td>{result.endTime}</td>
+
                         </tr>
                     ))}
                     </tbody>

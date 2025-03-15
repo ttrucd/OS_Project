@@ -1,17 +1,22 @@
 import {useState} from 'react';
 import {fifo, sjf, stcf, rr, mlfq } from './algorithms';
-import Process from './Process';
 import ProcessDisplay from './ProcessDisplay';
 import ResultsDisplay from './ResultsDisplay';
 import ChartDisplay from './ChartDisplay';
 import { jsPDF} from 'jspdf';
-import {generateProcesses} from './generate';
+import {generateProcesses} from './GenerateProcess';
+import Process from './GenerateProcess';
 import Animation from './animation';
 import './App.css';
 import cattGif from './catt.gif';
 
 function App() {
-  const [processes, setProcesses] = useState([]);     //an array store the processes to be scheduled, where each process is an object with a burstTime
+  const [processes, setProcesses] = useState([            //hardcoded processes using useState
+    { id: 1, arrivalTime: 0, burstTime: 5, priority: 1 },
+    { id: 2, arrivalTime: 1, burstTime: 3, priority: 2 },
+    { id: 3, arrivalTime: 2, burstTime: 2, priority: 3 },
+  ]);   
+
   const [timeQuantum, setTimeQuantum] = useState(5); //a number stores the time quantum for the RR algorithm
   const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
   const [selectedAlgorithm, setSelectedAlgorithm] = useState([]); //selected algorithms should be an array
@@ -48,7 +53,8 @@ const handleGenerateProcesses = (numProcesses) => {
           algorithmResult = mlfq(processes);
         break;
           default:
-        break;
+            console.warn(`Unknown algorithm: ${algorithm}`);
+        return;
     }
   
     
