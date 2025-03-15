@@ -1,8 +1,9 @@
 import React from 'react';
 
-function ResultsDisplay({results}){
+function ResultsDisplay({results, algoResult}){
     return  (
         <div> 
+            <h4 className ="result-title">{algoResult.algorithm.toUpperCase()} Result Table</h4>
             {results.length >0 ? (
                 <table> 
                     <thead>

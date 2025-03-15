@@ -88,73 +88,70 @@ const handleGenerateProcesses = (numProcesses) => {
       
       <input type="number" value={timeQuantum} onChange={(e)=> setTimeQuantum(e.target.value)} placeholder ="Time Quantum (For RR)"/>
 
-    {/*Multiple select box for algorithms*/}
-    <div className ="algorithm-selection">
-      <label> Select Algorithm</label>
-      <div className ="algorithm-checkboxes">
-        {['fifo', 'sjf', 'stcf', 'rr','mlfq'].map((algorithm) => (
+      {/*Display Generated Processes */}
+      {processes.length > 0 && (
+        <div className="process-display">
+          <ProcessDisplay processes={processes} />
+          </div>
+      )}
 
-          <div key ={algorithm} className="algorithm-box">
-            <input type ="checkbox" id={algorithm} value ={algorithm} checked ={selectedAlgorithm.includes(algorithm)}
-            onChange ={() => handleAlgorithmSelection(algorithm)} 
-            />
-            <label htmlFor ={algorithm}>{algorithm.toUpperCase()}</label>
+      <div className="algorithm-selection">
+        <label>Select Algorithm</label>
+        <div className="algorithm-checkboxes">
+          {['fifo', 'sjf', 'stcf', 'rr', 'mlfq'].map((algorithm) => (
+            <div key={algorithm} className="algorithm-box">
+              <input
+                type="checkbox"
+                id={algorithm}
+                value={algorithm}
+                checked={selectedAlgorithm.includes(algorithm)}
+                onChange={() => handleAlgorithmSelection(algorithm)}
+              />
+              <label htmlFor={algorithm}>{algorithm.toUpperCase()}</label>
             </div>
-        ))}
+          ))}
         </div>
-        </div>
-   
+      </div>
 
-      <button onClick ={runAlgorithm}> Run Algorithm</button>
+      <button onClick={runAlgorithm}>Run Algorithm</button>
 
-      <div className ="tables-container">
-        <div className ="generated-table">
-          <ProcessDisplay processes={processes}/>
-        </div>
+    {/* Display results for each selected algorithm in separate boxes */}
+    <div className="algorithms-container">
+        {results.length > 0 &&
+          results.map((algoResult, index) => (
+            <div key={index} className="algorithm-box">
+              <h3>{algoResult.algorithm.toUpperCase()} </h3>
 
-        {/*display results for each selected algorithm*/}
-        {results.length > 0 && results.map((algoResult,index) => (
-
-              <div key={index} className ="result-table">
-              <h3>{algoResult.algorithm.toUpperCase()} Resutls</h3>
-            
-                <ResultsDisplay results ={algoResult.result} />
+              {/* Result Table */}
+              <div className="result-table">
+                <ResultsDisplay results={algoResult.result} algoResult={algoResult} />
               </div>
-        ))}
-        </div>
-          {/*display progress bar animation for each algorithm */}
+
+              {/* Progress Bar */}
+              <div className="progress-container">
+              <h4 className="progress-title">{algoResult.algorithm.toUpperCase()} Progress</h4>
               <div className="progress">
-                {results.map((algoResult, index) => (
-                  <div key={index} className="progress-algorithm">
-              <h4>{algoResult.algorithm.toUpperCase()}</h4>
+    
                 {processes.map((process, idx) => {
-                  const processResult = algoResult.result.find(res => res.processId === process.id);
+                  const processResult = algoResult.result.find((res) => res.processId === process.id);
                   return (
                     <Animation
                       key={idx}
-                      progress={processResult?.endTime}  // Use the end time for progress
+                      progress={processResult?.endTime} // Use the end time for progress
                       label={`Process ${process.id}`}
                     />
                   );
                 })}
               </div>
+              </div>
+
+              {/* Bar Chart */}
+              <div className="chart-container">
+                <ChartDisplay results={algoResult.result} algorithm={algoResult.algorithm} />
+              </div>
+            </div>
           ))}
-          </div>
-            
-
-
-    {/*the chart willl display after run the algorithm, as long as the results array has data */}
-      {results.length >0 && results.map ((algoResult, index) => (
-
-        <div key ={index} className="chart-container">
-          <h3>Completion Time Chart</h3>
-          <ChartDisplay 
-    
-          results ={algoResult.result}
-          algorithm ={algoResult.algorithm} />
-          </div>
-        
-      ))}
+      </div>
       
       <button onClick ={exportToPDF}>Download PDF</button>
     </div>

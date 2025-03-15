@@ -1,27 +1,40 @@
 .App {
   text-align: center;
 }
-.container{
-  display:flex;
-  
-  align-items: center;
-  min-height: 100vh;
+
+.container {
+  display: flex;
+  max-width: 1200px;
   flex-direction: column;
   text-align: center;
+  padding: 20px;
+  margin: 0 auto;
 }
+
 .title {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 10px;
 }
+
 .title-gif {
-  width: 20%;
+  width: 30px;
   height: auto;
 }
-button{
-  margin: 10px 0;
-  padding: 5px;
 
+button {
+  margin: 10px 0;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
 }
 
 input[type="number"], select {
@@ -30,70 +43,123 @@ input[type="number"], select {
   border: 1px solid #ccc;
 }
 
-
-/*container holld both tables*/
-.tables-container {
-  display: flex;
-  width: 60%;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.generated-table {
-  width: 48%;
-  margin: 10px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 .result-table {
-  width: 48%;
-  margin: 10px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
-table{
+table {
   width: 100%;
   border-collapse: collapse;
 }
 
-table, th, td{
+table, th, td {
   padding: 8px;
   border: 1px solid rgb(151, 41, 60);
   text-align: left;
 }
 
-th, td{
+th, td {
   padding: 8px;
   text-align: left;
 }
-th{
+
+th {
   background-color: #f2f2f2;
 }
 
 .chart-container {
   margin-top: 20px;
-  text-align: center;
-  width: 60%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column; /*stacked vertically*/
+  width: 100%;
+  height: 300px;
+  padding: 20px 0;
+  box-sizing: border-box;
 }
 
-/*Algorithm boxes*/
+/* Algorithm Selection */
 .algorithm-selection {
   margin-top: 20px;
 }
+
 .algorithm-checkboxes {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: flex-start;
 }
 
 .algorithm-box {
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: 10px;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* Flex layout for the progress bar, chart, and result table */
+.progress-container,
+.chart-container,
+.result-table {
+  flex: 1;
+  min-width: 300px;
+  box-sizing: border-box;
+}
+
+.progress-container {
+  margin-right: 20px;
+}
+
+.chart-container {
+  margin-right: 20px;
+  min-width: 300px;
+}
+
+.result-table {
+  min-width: 300px;
+}
+
+.process-display {
+  margin-bottom: 40px;
+}
+
+/* Title styles */
+.progress-title {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+.chart-title,
+.table-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .algorithm-box {
+    flex-direction: column;
+  }
+
+  .progress-container,
+  .chart-container,
+  .result-table {
+    min-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .progress-container {
+    margin-right: 0;
+  }
+
+  .chart-container {
+    margin-right: 0;
+  }
+
+  .result-table {
+    margin-right: 0;
+  }
 }
