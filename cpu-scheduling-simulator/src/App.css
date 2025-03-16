@@ -5,6 +5,7 @@
 .container {
   display: flex;
   max-width: 1200px;
+  background-color: #e4d1d9;
   flex-direction: column;
   text-align: center;
   padding: 8px 16px;
