@@ -12,7 +12,8 @@ import './App.css';
 
 
 function App() {
-  const [processes, setProcesses] = useState([            //hardcoded processes using useState
+  //useState to manage the processes array with hardcoded values
+  const [processes, setProcesses] = useState([           
     { id: 1, arrivalTime: 0, burstTime: 5, priority: 1 },
     { id: 2, arrivalTime: 1, burstTime: 3, priority: 2 },
     { id: 3, arrivalTime: 2, burstTime: 2, priority: 3 },
@@ -25,18 +26,19 @@ function App() {
   const [isRunning, setIsRunning] =useState(false);
 
   const [ChartRef, setChartRef] =useState([]); //store chart refs dynamically
+  //useRef to reference the table and progress bar for the PDF
   const tableRef =useRef(null);
   const progressRef = useRef(null);
 
-//function to generate processes
+//function to generate random processes and set them in state
 const handleGenerateProcesses = (numProcesses) => {
-  const newProcesses = generateProcesses(numProcesses); //call the import function
-  setProcesses(newProcesses);
+  const newProcesses = generateProcesses(numProcesses); //call the generateProceses function
+  setProcesses(newProcesses); //update processes state
 };
 
 
 //execute the selected scheduling algorithm and store the results
-//it uses a switch statement to choose whcih algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
+//it uses a switch statement to choose which algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
 
   const runAlgorithm = () => {
     setIsRunning(true);   //start progress
@@ -46,19 +48,19 @@ const handleGenerateProcesses = (numProcesses) => {
       let algorithmResult = [];
       switch (algorithm) {
         case 'fifo':
-          algorithmResult = fifo(processes);
+          algorithmResult = fifo(processes); //FIFO
         break;
         case 'sjf':
-          algorithmResult = sjf(processes);
+          algorithmResult = sjf(processes); //SJF
         break;
         case 'stcf':
-          algorithmResult = stcf(processes);
+          algorithmResult = stcf(processes); //STCF
         break;
         case 'rr':
-          algorithmResult = rr(processes, timeQuantum);
+          algorithmResult = rr(processes, timeQuantum); //RR
         break;
         case 'mlfq':
-          algorithmResult = mlfq(processes);
+          algorithmResult = mlfq(processes); //MLFQ
         break;
           default:
             console.warn(`Unknown algorithm: ${algorithm}`);
@@ -66,6 +68,7 @@ const handleGenerateProcesses = (numProcesses) => {
     }
     return {algorithm, result: algorithmResult, progress: 100};
   });
+  //update the results state with the results from all selected algorithms
     setResults(allResults);
     setChartRef(allResults.map(()=> React.createRef())); //create refs for each chart dynamically
     setIsRunning(false);    //stop progress
@@ -76,10 +79,12 @@ const handleGenerateProcesses = (numProcesses) => {
 
   //handle algorithm selection
   const handleAlgorithmSelection = (algorithm) => {
+    //updtae the selected algorithm list in state
     setSelectedAlgorithm ((prevSelected) => 
+      //check if the algorithm is already selected
       prevSelected.includes(algorithm)
-      ? prevSelected.filter((algo) => algo !== algorithm)
-      : [...prevSelected, algorithm]);
+      ? prevSelected.filter((algo) => algo !== algorithm) //if it is, remove it from the list
+      : [...prevSelected, algorithm]);                    //if it is not, add it to the list
   };
 
   return (
