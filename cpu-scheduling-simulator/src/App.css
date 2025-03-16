@@ -137,22 +137,18 @@ th {
   flex-wrap: wrap;
 }
 .result-table{
-  width: 48%;
+  width: 100%;
   min-width: 300px;
   box-sizing: border-box;
 }
-.progress-container {
-  width: 48%;
-  min-width: 250px;
-  
-}
+
 
 
 /* Flex layout for the progress bar, chart, and result table */
 
 .chart-container,
 .result-table {
-  min-width: 70%;
+  min-width: 60%;
   box-sizing: border-box;
 }
 

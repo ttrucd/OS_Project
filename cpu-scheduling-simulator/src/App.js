@@ -6,7 +6,7 @@ import ChartDisplay from './ChartDisplay';
 import { jsPDF} from 'jspdf';
 import {generateProcesses} from './GenerateProcess';
 import Process from './GenerateProcess';
-import Animation from './animation';
+import Progress from './Progress';
 import './App.css';
 
 
@@ -20,7 +20,7 @@ function App() {
   const [timeQuantum, setTimeQuantum] = useState(5); //a number stores the time quantum for the RR algorithm
   const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
   const [selectedAlgorithm, setSelectedAlgorithm] = useState([]); //selected algorithms should be an array
-
+  const [isRunning, setIsRunning] =useState(false);
 
 //function to generate processes
 const handleGenerateProcesses = (numProcesses) => {
@@ -31,10 +31,12 @@ const handleGenerateProcesses = (numProcesses) => {
 
 //execute the selected scheduling algorithm and store the results
 //it uses a switch statement to choose whcih algorithm to apply then each is passed the processes array. The results are storred in the 'results' state
-  const runAlgorithm = () => {
-    let allResults = []; //hold results for multiple algorithms
 
-    selectedAlgorithm.forEach((algorithm) => {
+  const runAlgorithm = () => {
+    setIsRunning(true);   //start progress
+    setTimeout(() => {
+
+    let allResults = selectedAlgorithm.map((algorithm) => {
       let algorithmResult = [];
       switch (algorithm) {
         case 'fifo':
@@ -54,13 +56,14 @@ const handleGenerateProcesses = (numProcesses) => {
         break;
           default:
             console.warn(`Unknown algorithm: ${algorithm}`);
-        return;
+        return null;
     }
-  
-    
-    allResults.push({algorithm, result: algorithmResult});
+    return {algorithm, result: algorithmResult, progress: 100};
   });
-    setResults(allResults); //set the results for multiple algorithms 
+    setResults(allResults);
+    setIsRunning(false);    //stop progress
+  }, 3000);       //simulate execution time
+    
   };
 
 //use jsPDF to create and download a PDF of the results
@@ -130,32 +133,21 @@ const handleGenerateProcesses = (numProcesses) => {
           results.map((algoResult, index) => (
             <div key={index} className="algorithm-result-container">
               <h3>{algoResult.algorithm.toUpperCase()} </h3>
+
               {/*Result table */}
               <div className="result-progress-container">
               <div className="result-table">
                 <ResultsDisplay results={algoResult.result} algoResult={algoResult} />
               </div>
 
-              <div className="progress-container">
-                <h4 className="progress-title">{algoResult.algorithm.toUpperCase()} Progress</h4>
-                <div className="progress">
-                  {processes.map((process, idx) => {
-                    const processResult = algoResult.result.find((res) => res.processId === process.id);
-                    return (
-                      <Animation
-                        key={idx}
-                        progress={processResult?.endTime}
-                        label={`Process ${process.id}`}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-              </div>
+              {isRunning && <Progress duration={3000} onComplete={() => setIsRunning(false)} />}
+              <button onClick={runAlgorithm} className="rerunbtn">Re-run Algorithm</button>
+
 
               <div className="chart-container">
                 <ChartDisplay results={algoResult.result} algorithm={algoResult.algorithm} />
               </div>
+            </div>
             </div>
           ))}
       </div>
