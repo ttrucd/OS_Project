@@ -1,5 +1,4 @@
-//generate processes
-import React from 'react';
+
 
 // creates processes with random burst times (1-10)
 export function generateProcesses (numProcesses) {
@@ -16,8 +15,3 @@ export function generateProcesses (numProcesses) {
   //once all the processes are created, the setProcesses func is called to update processes state.
   return newProcesses;
 };
-
-function Process({generateProcesses}) {
-  
-}
-export default Process;

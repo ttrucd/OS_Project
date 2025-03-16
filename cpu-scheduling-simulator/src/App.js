@@ -1,12 +1,13 @@
-import {useState} from 'react';
+import React, {useRef,useState} from 'react';
 import {fifo, sjf, stcf, rr, mlfq } from './algorithms';
-import ProcessDisplay from './ProcessDisplay';
-import ResultsDisplay from './ResultsDisplay';
-import ChartDisplay from './ChartDisplay';
-import { jsPDF} from 'jspdf';
+import ProcessDisplay from './Display/ProcessDisplay';
+import ResultsDisplay from './Display/ResultsDisplay';
+import ChartDisplay from './Display/ChartDisplay';
+
+import {generatePDF} from './PDF';
 import {generateProcesses} from './GenerateProcess';
-import Process from './GenerateProcess';
-import Progress from './Progress';
+
+import Progress from './Progress/Progress';
 import './App.css';
 
 
@@ -18,9 +19,14 @@ function App() {
   ]);   
 
   const [timeQuantum, setTimeQuantum] = useState(5); //a number stores the time quantum for the RR algorithm
+  
   const [results, setResults] = useState([]);         //an array will store the results from the selected scheduling algorithm
   const [selectedAlgorithm, setSelectedAlgorithm] = useState([]); //selected algorithms should be an array
   const [isRunning, setIsRunning] =useState(false);
+
+  const [ChartRef, setChartRef] =useState([]); //store chart refs dynamically
+  const tableRef =useRef(null);
+  const progressRef = useRef(null);
 
 //function to generate processes
 const handleGenerateProcesses = (numProcesses) => {
@@ -61,22 +67,12 @@ const handleGenerateProcesses = (numProcesses) => {
     return {algorithm, result: algorithmResult, progress: 100};
   });
     setResults(allResults);
+    setChartRef(allResults.map(()=> React.createRef())); //create refs for each chart dynamically
     setIsRunning(false);    //stop progress
   }, 3000);       //simulate execution time
     
   };
 
-//use jsPDF to create and download a PDF of the results
-  const exportToPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Scheduling Results", 20, 20);
-    //add result to the PDF
-    results.forEach((result, index) => {
-      doc.text(`Process ${result.processId}: Start Time - ${result.startTime}, End Time - ${result.endTime}`, 20, 30 + index * 10);
-
-    });
-    doc.save("results.pdf");
-  };
 
   //handle algorithm selection
   const handleAlgorithmSelection = (algorithm) => {
@@ -91,7 +87,7 @@ const handleGenerateProcesses = (numProcesses) => {
       <h1 className="title"> CPU Scheduling Simulator</h1>
       <h2> CS540 Operating Systems Project 1 - Thanh Dang </h2>
       
-      <Process generateProcesses={handleGenerateProcesses} />
+     
 
       <div className="generate-process-container">
         <div className="generate-process-left">
@@ -136,23 +132,23 @@ const handleGenerateProcesses = (numProcesses) => {
 
               {/*Result table */}
               <div className="result-progress-container">
-              <div className="result-table">
+              <div ref={tableRef} className="result-table">
                 <ResultsDisplay results={algoResult.result} algoResult={algoResult} />
               </div>
-
+              <div ref={progressRef} className="progress-bar">
               {isRunning && <Progress duration={3000} onComplete={() => setIsRunning(false)} />}
-              <button onClick={runAlgorithm} className="rerunbtn">Re-run Algorithm</button>
-
-
-              <div className="chart-container">
-                <ChartDisplay results={algoResult.result} algorithm={algoResult.algorithm} />
+              <button onClick={runAlgorithm} className="rerunbtn">Progress Bar</button>
               </div>
-            </div>
+              {/*Bar Chart table */}
+              <div className="chart-container" ref={ChartRef[index]}>
+                  <ChartDisplay results={algoResult.result} algorithm={algoResult.algorithm} />
+                </div>
+              </div>
             </div>
           ))}
       </div>
 
-      <button onClick={exportToPDF}>Download PDF</button>
+      <button onClick={() => generatePDF(results, ChartRef, tableRef, progressRef)}>Download PDF</button>
     </div>
   );
 }

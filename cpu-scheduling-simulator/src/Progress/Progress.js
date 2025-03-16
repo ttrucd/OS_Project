@@ -1,5 +1,6 @@
 //use animation to show the progress of each algorithm
 import React, {useState, useEffect} from 'react';
+
 import './Progress.css';
 
 const Progress = ({duration, onComplete}) => {
