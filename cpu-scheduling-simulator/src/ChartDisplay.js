@@ -31,7 +31,7 @@ function ChartDisplay ({results, algorithm}) { //takes in results as a prop
     };
     return(
         <div className ="chart-container">
-            <h3 className ="chart-title">{algorithm.toUpperCase()} - Completion Time Chart</h3>
+            <h3 className ="chart-title">{algorithm.toUpperCase()} Completion Time Chart</h3>
             <Bar data={data} /> {/*render the bar chart.*/}
         </div>
     );

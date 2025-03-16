@@ -15,13 +15,9 @@ export function generateProcesses (numProcesses) {
     }
   //once all the processes are created, the setProcesses func is called to update processes state.
   return newProcesses;
-}
+};
 
 function Process({generateProcesses}) {
-  return  (
-      <div>
-          <button onClick ={() => generateProcesses(5)}>Generate Processes</button>
-      </div>
-  );
+  
 }
 export default Process;

@@ -8,7 +8,7 @@ import {generateProcesses} from './GenerateProcess';
 import Process from './GenerateProcess';
 import Animation from './animation';
 import './App.css';
-import cattGif from './catt.gif';
+
 
 function App() {
   const [processes, setProcesses] = useState([            //hardcoded processes using useState
@@ -85,84 +85,84 @@ const handleGenerateProcesses = (numProcesses) => {
 
   return (
     <div className="container">
-      <h1 className="title">
-        <img src={cattGif} alt="Cat" className="title-gif"/>
+      <h1 className="title"> CPU Scheduling Simulator</h1>
+      <h2> CS540 Operating Systems Project 1 - Thanh Dang </h2>
       
-      CPU Scheduling Simulator</h1>
-      <Process generateProcesses ={handleGenerateProcesses}/>
-      
-      
-      <input type="number" value={timeQuantum} onChange={(e)=> setTimeQuantum(e.target.value)} placeholder ="Time Quantum (For RR)"/>
+      <Process generateProcesses={handleGenerateProcesses} />
 
-      {/*Display Generated Processes */}
-      {processes.length > 0 && (
-        <div className="process-display">
-          <ProcessDisplay processes={processes} />
+      <div className="generate-process-container">
+        <div className="generate-process-left">
+          <button onClick={() => handleGenerateProcesses(5)}>Generate Processes</button>
+          <input type="number" value={timeQuantum} onChange={(e) => setTimeQuantum(e.target.value)} placeholder="Time Quantum (For RR)" />
+        </div>
+
+        <div className="generate-process-right">
+          <label>Select Algorithm</label>
+          <div className="algorithm-checkboxes">
+            {['fifo', 'sjf', 'stcf', 'rr', 'mlfq'].map((algorithm) => (
+              <div key={algorithm} className="algorithm-box">
+                <input
+                  type="checkbox"
+                  id={algorithm}
+                  value={algorithm}
+                  checked={selectedAlgorithm.includes(algorithm)}
+                  onChange={() => handleAlgorithmSelection(algorithm)}
+                />
+                <label htmlFor={algorithm}>{algorithm.toUpperCase()}</label>
+              </div>
+            ))}
           </div>
-      )}
-
-      <div className="algorithm-selection">
-        <label>Select Algorithm</label>
-        <div className="algorithm-checkboxes">
-          {['fifo', 'sjf', 'stcf', 'rr', 'mlfq'].map((algorithm) => (
-            <div key={algorithm} className="algorithm-box">
-              <input
-                type="checkbox"
-                id={algorithm}
-                value={algorithm}
-                checked={selectedAlgorithm.includes(algorithm)}
-                onChange={() => handleAlgorithmSelection(algorithm)}
-              />
-              <label htmlFor={algorithm}>{algorithm.toUpperCase()}</label>
-            </div>
-          ))}
         </div>
       </div>
 
       <button onClick={runAlgorithm}>Run Algorithm</button>
 
-    {/* Display results for each selected algorithm in separate boxes */}
-    <div className="algorithms-container">
+      {/* Display Generated Processes */}
+      {processes.length > 0 && (
+        <div className="process-display">
+          <ProcessDisplay processes={processes} />
+        </div>
+      )}
+
+      {/* Display results for each selected algorithm */}
+      <div className="algorithms-container">
         {results.length > 0 &&
           results.map((algoResult, index) => (
-            <div key={index} className="algorithm-box">
+            <div key={index} className="algorithm-result-container">
               <h3>{algoResult.algorithm.toUpperCase()} </h3>
-
-              {/* Result Table */}
+              {/*Result table */}
+              <div className="result-progress-container">
               <div className="result-table">
                 <ResultsDisplay results={algoResult.result} algoResult={algoResult} />
               </div>
 
-              {/* Progress Bar */}
               <div className="progress-container">
-              <h4 className="progress-title">{algoResult.algorithm.toUpperCase()} Progress</h4>
-              <div className="progress">
-    
-                {processes.map((process, idx) => {
-                  const processResult = algoResult.result.find((res) => res.processId === process.id);
-                  return (
-                    <Animation
-                      key={idx}
-                      progress={processResult?.endTime} // Use the end time for progress
-                      label={`Process ${process.id}`}
-                    />
-                  );
-                })}
+                <h4 className="progress-title">{algoResult.algorithm.toUpperCase()} Progress</h4>
+                <div className="progress">
+                  {processes.map((process, idx) => {
+                    const processResult = algoResult.result.find((res) => res.processId === process.id);
+                    return (
+                      <Animation
+                        key={idx}
+                        progress={processResult?.endTime}
+                        label={`Process ${process.id}`}
+                      />
+                    );
+                  })}
+                </div>
               </div>
               </div>
 
-              {/* Bar Chart */}
               <div className="chart-container">
                 <ChartDisplay results={algoResult.result} algorithm={algoResult.algorithm} />
               </div>
             </div>
           ))}
       </div>
-      
-      <button onClick ={exportToPDF}>Download PDF</button>
+
+      <button onClick={exportToPDF}>Download PDF</button>
     </div>
   );
-
 }
 
 export default App;

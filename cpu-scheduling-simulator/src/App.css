@@ -7,8 +7,12 @@
   max-width: 1200px;
   flex-direction: column;
   text-align: center;
-  padding: 20px;
+  padding: 8px 16px;
   margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .title {
@@ -17,30 +21,85 @@
   align-items: center;
   gap: 10px;
 }
-
-.title-gif {
-  width: 30px;
-  height: auto;
+h2 {
+  margin-top: -10px;
 }
 
 button {
   margin: 10px 0;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  width: auto;
+  max-width: 300px;
+  background-color: #cc94ae;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 0.9rem;
+  text-align: center;
+
+  margin-top: -1px;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #875476;
 }
 
 input[type="number"], select {
-  font-size: 1rem;
+  font-size: 0.9rem;
+  padding: 5px;
+  width: 290px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+/*styling for the generate process and select algorithm sections*/
+.generate-process-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  gap: 10px;
+  margin: 100;
+  width: 65%;
+
+}
+
+.generate-process-left {
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%;
+  
+}
+.generate-process-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%;
+}
+/*Select Algorithm label */
+.generate-process-right > label {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #cc94ae; /* Same as the button background color */
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 15px; /* Adds space below */
+ 
+}
+
+
+.algorithm-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
 .result-table {
@@ -54,7 +113,7 @@ table {
 
 table, th, td {
   padding: 8px;
-  border: 1px solid rgb(151, 41, 60);
+  border: 1px solid rgb(166, 4, 117);
   text-align: left;
 }
 
@@ -64,102 +123,111 @@ th, td {
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #eabccd;
 }
 
+
+/* Container for Result Table and Progress Bar side by side */
+.result-progress-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.result-table{
+  width: 48%;
+  min-width: 300px;
+  box-sizing: border-box;
+}
+.progress-container {
+  width: 48%;
+  min-width: 250px;
+  
+}
+
+
+/* Flex layout for the progress bar, chart, and result table */
+
+.chart-container,
+.result-table {
+  min-width: 70%;
+  box-sizing: border-box;
+}
+
+
+/* Chart container styles */
 .chart-container {
   margin-top: 20px;
   width: 100%;
   height: 300px;
   padding: 20px 0;
   box-sizing: border-box;
-}
-
-/* Algorithm Selection */
-.algorithm-selection {
-  margin-top: 20px;
-}
-
-.algorithm-checkboxes {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 250px;
 }
 
-.algorithm-box {
-  margin-bottom: 40px;
-  width: 100%;
-  max-width: 1200px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  box-sizing: border-box;
-}
-
-/* Flex layout for the progress bar, chart, and result table */
-.progress-container,
-.chart-container,
-.result-table {
-  flex: 1;
-  min-width: 300px;
-  box-sizing: border-box;
-}
-
-.progress-container {
-  margin-right: 20px;
-}
-
-.chart-container {
-  margin-right: 20px;
-  min-width: 300px;
-}
-
-.result-table {
-  min-width: 300px;
-}
 
 .process-display {
   margin-bottom: 40px;
 }
 
 /* Title styles */
-.progress-title {
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-}
+
 .chart-title,
 .table-title {
   margin-bottom: 10px;
   font-weight: bold;
+  align-items: center;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .algorithm-box {
+  .generate-process-container {
     flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Add spacing between the sections on mobile */
+    width: 100%;
   }
 
-  .progress-container,
+  .generate-process-left,
+  .generate-process-right {
+    align-items: center;
+  }
+
+  .algorithm-selection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .chart-container,
   .result-table {
     min-width: 100%;
     margin-bottom: 20px;
   }
-
-  .progress-container {
-    margin-right: 0;
-  }
-
+  
   .chart-container {
     margin-right: 0;
+    width: 100%;
+  }
+  .result-progress-container {
+    flex-direction: column; /* Stack the table and progress bar on mobile */
+    gap: 10px;
+    width: 100%; /* Ensure the container takes full width */
   }
 
-  .result-table {
-    margin-right: 0;
+  .result-table,
+  .progress-container {
+    width: 100%; /* Stack them vertically, taking full width */
+    min-width: 100%; /* Ensure they don't get too small */
   }
+  .progress-container,
+  .chart-container {
+    margin-right: 0; /* Ensure there is no extra margin on mobile */
+  }
+ 
 }
