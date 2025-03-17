@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/cpu-scheduling-simulator/static/css/main.3c1f4d40.css",
-    "main.js": "/cpu-scheduling-simulator/static/js/main.a4821ccd.js",
-    "static/js/977.65efb608.chunk.js": "/cpu-scheduling-simulator/static/js/977.65efb608.chunk.js",
-    "static/js/732.7d31ecf3.chunk.js": "/cpu-scheduling-simulator/static/js/732.7d31ecf3.chunk.js",
-    "static/js/488.269f0a55.chunk.js": "/cpu-scheduling-simulator/static/js/488.269f0a55.chunk.js",
-    "index.html": "/cpu-scheduling-simulator/index.html",
-    "main.3c1f4d40.css.map": "/cpu-scheduling-simulator/static/css/main.3c1f4d40.css.map",
-    "main.a4821ccd.js.map": "/cpu-scheduling-simulator/static/js/main.a4821ccd.js.map",
-    "732.7d31ecf3.chunk.js.map": "/cpu-scheduling-simulator/static/js/732.7d31ecf3.chunk.js.map",
-    "488.269f0a55.chunk.js.map": "/cpu-scheduling-simulator/static/js/488.269f0a55.chunk.js.map"
+    "main.css": "/OS_Project/static/css/main.3c1f4d40.css",
+    "main.js": "/OS_Project/static/js/main.ab8094c9.js",
+    "static/js/977.65efb608.chunk.js": "/OS_Project/static/js/977.65efb608.chunk.js",
+    "static/js/732.7d31ecf3.chunk.js": "/OS_Project/static/js/732.7d31ecf3.chunk.js",
+    "static/js/488.269f0a55.chunk.js": "/OS_Project/static/js/488.269f0a55.chunk.js",
+    "index.html": "/OS_Project/index.html",
+    "main.3c1f4d40.css.map": "/OS_Project/static/css/main.3c1f4d40.css.map",
+    "main.ab8094c9.js.map": "/OS_Project/static/js/main.ab8094c9.js.map",
+    "732.7d31ecf3.chunk.js.map": "/OS_Project/static/js/732.7d31ecf3.chunk.js.map",
+    "488.269f0a55.chunk.js.map": "/OS_Project/static/js/488.269f0a55.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3c1f4d40.css",
-    "static/js/main.a4821ccd.js"
+    "static/js/main.ab8094c9.js"
   ]
 }
